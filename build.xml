@@ -57,9 +57,6 @@
 		<!-- where the zip file for deployment will live -->
 		<property name="dist.dir" location="deploy" />
 		
-		<!-- what to call it -->		
-		<property name="dist.zip" value="${application.name}.zip" />
-		
 		<!-- what to start the "path" in the zip with -->
 		<property name="dist.prefixInZip" value="${application.name}" />
 		
@@ -91,10 +88,13 @@
 	<target name="clean" depends="init">
 		<mkdir dir="${test.output.xml}" />
 		<mkdir dir="${test.junitoutput}" />
+		<delete dir="${dist.dir}" failonerror="false" />
 		<mkdir dir="${dist.dir}" />
+		
 	</target>
 
-	<target name="dist" depends="clean" description="Builds the zip file for deployment">
+	<target name="dist" depends="clean,getVersion" description="Builds the zip file for deployment">
+		<property name="dist.zip" value="${application.name}-${build.version}.zip" />
 		<zip destfile="${dist.dir}/${dist.zip}">
 			<zipfileset dir="." excludes="${test.dir.name}/, deploy/, lib/, .apptacular/, .project, build.xml, settings.xml, .settings/" prefix="${dist.prefixInZip}" casesensitive="false" />
 		</zip>
