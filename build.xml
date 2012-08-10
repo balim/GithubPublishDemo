@@ -135,9 +135,14 @@
 		<!-- <replaceregexp file="${readme.file}" match="Version Info:(.*)" replace="Version Info: This is release build ${build.version}, built on ${build.date}" /> -->
 	</target>
 	
-	<target name="pushLatestDevelop" depends="init">
+	<target name="gitPushLatestMaster" depends="init">
 		<gitPushBuildChanges branchName="master" />
 	</target>
+	
+	<target name="gitTagLatest" depends="getVersion">
+		<gitTag remoteName="origin" tagName="${build.version}" />
+	</target>
+	
 		<!--
 		=================================
 			git-related Macrodefs
