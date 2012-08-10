@@ -135,6 +135,10 @@
 		<!-- <replaceregexp file="${readme.file}" match="Version Info:(.*)" replace="Version Info: This is release build ${build.version}, built on ${build.date}" /> -->
 	</target>
 	
+	<target name="gitPullLatestMaster" depends="init">
+		<gitPull branchName="master"/>
+	</target>
+		
 	<target name="gitPushLatestMaster" depends="init">
 		<gitPushBuildChanges branchName="master" />
 	</target>
@@ -165,6 +169,19 @@
 				</args>
 			</git>
 			<git command="push" dir=".">
+				<args>
+					<arg value="@{remoteName}"/>
+					<arg value="@{branchName}"/>
+				</args>
+			</git>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="gitPull">
+		<attribute name="remoteName" default="origin"/>
+		<attribute name="branchName" default="develop"/>
+		<sequential>
+			<git command="pull" dir=".">
 				<args>
 					<arg value="@{remoteName}"/>
 					<arg value="@{branchName}"/>
