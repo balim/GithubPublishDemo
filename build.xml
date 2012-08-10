@@ -136,7 +136,7 @@
 	</target>
 	
 	<target name="pushLatestDevelop" depends="init">
-		<gitPushBuildChanges />
+		<gitPushBuildChanges branchName="master" />
 	</target>
 		<!--
 		=================================
